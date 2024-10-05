@@ -6,11 +6,11 @@ const app = express();
 app.use(bodyParser.json());
 const post = {};
 
-app.get("/posts", (req, res) => {
+app.get("/posts/:id/comments", (req, res) => {
   res.send(post);
 });
 
-app.post("/posts", (req, res) => {
+app.post("/posts/:id/comments", (req, res) => {
   const id = randomBytes(4).toString("hex");
   const { title } = req.body;
 
@@ -25,7 +25,7 @@ app.post("/posts", (req, res) => {
   res.status(201).json({ id: id, title: title });
 });
 
-app.listen(5000, () => {
+app.listen(5001, () => {
   console.log("Hii");
   console.log("Running on Port 500");
 });
