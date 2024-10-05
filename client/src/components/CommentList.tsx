@@ -21,8 +21,6 @@ const CommentList = ({ postId }: { postId: string }) => {
     setPosts(res.data);
   };
 
-  console.log(posts);
-
   return <ul>{renderedPosts}</ul>;
 };
 
