@@ -4,25 +4,22 @@ const bodyParser = require("body-parser");
 const app = express();
 
 app.use(bodyParser.json());
-const post = {};
+const commentsByPostId = {};
 
 app.get("/posts/:id/comments", (req, res) => {
-  res.send(post);
+  res.send(commentsByPostId[req.params.id] || []);
 });
 
 app.post("/posts/:id/comments", (req, res) => {
-  const id = randomBytes(4).toString("hex");
-  const { title } = req.body;
+  const commentId = randomBytes(4).toString("hex");
+  const { content } = req.body;
 
-  if (!title) {
-    return res.status(400).send("Title is required");
-  }
+  const comments = commentsByPostId[req.params.id] || [];
 
-  post[id] = {
-    id,
-    title,
-  };
-  res.status(201).json({ id: id, title: title });
+  comments.push({ id: commentId, content });
+
+  commentsByPostId[req.params.id] = comments;
+  res.status(201).send(comments);
 });
 
 app.listen(5001, () => {
