@@ -9,8 +9,15 @@ app.use(bodyParser.json());
 app.post("/events", (req, res) => {
   try {
     const events = req.body;
-    axios.post("http://localhost:5000/events", events);
-    axios.post("http://localhost:5001/events", events);
+    axios.post("http://localhost:5000/events", events).then((response) => {
+      console.log(response.data);
+    });
+    axios.post("http://localhost:5001/events", events).then((response) => {
+      console.log(response.data);
+    });
+    axios.post("http://localhost:5003/events", events).then((response) => {
+      console.log(response.data);
+    });
     res.send({ status: "OK" });
   } catch (error) {
     console.error(error.message);
