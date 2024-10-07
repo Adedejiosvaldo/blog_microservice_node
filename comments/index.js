@@ -28,5 +28,5 @@ app.post("/posts/:id/comments", (req, res) => {
 
 app.listen(5001, () => {
   console.log("Hii");
-  console.log("Running on Port 500");
+  console.log("Running on Port 5001");
 });

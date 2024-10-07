@@ -16,7 +16,7 @@ app.post("/events", async (req, res) => {
 
     res.send({ status: "OK" });
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).send({ status: "Error" });
   }
 });
