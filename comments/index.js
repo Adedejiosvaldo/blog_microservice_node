@@ -40,6 +40,12 @@ app.post("/posts/:id/comments", async (req, res) => {
   }
 });
 
+app.post("/events", (req, res) => {
+  console.log("Received Event", req.body.type);
+
+  res.send({});
+});
+
 app.listen(5001, () => {
   console.log("Hii");
   console.log("Running on Port 5001");

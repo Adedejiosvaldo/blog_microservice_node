@@ -15,31 +15,33 @@ app.get("/posts", (req, res) => {
 });
 
 app.post("/posts", (req, res) => {
-  try {
-    const id = randomBytes(4).toString("hex");
-    const { title } = req.body;
+  const id = randomBytes(4).toString("hex");
+  const { title } = req.body;
 
-    if (!title) {
-      return res.status(400).send("Title is required");
-    }
+  if (!title) {
+    return res.status(400).send("Title is required");
+  }
 
-    post[id] = {
+  post[id] = {
+    id,
+    title,
+  };
+
+  axios.post("http://localhost:5002/events", {
+    type: "PostCreated",
+    data: {
       id,
       title,
-    };
+    },
+  });
 
-    axios.post("http://localhost:5002/events", {
-      type: "PostCreated",
-      data: {
-        id,
-        title,
-      },
-    });
+  res.status(201).json({ id: id, title: title });
+});
 
-    res.status(201).json({ id: id, title: title });
-  } catch (error) {
-    console.log(error);
-  }
+app.post("/events", (req, res) => {
+  console.log("Received Event", req.body.type);
+
+  res.send({});
 });
 
 app.listen(5000, () => {

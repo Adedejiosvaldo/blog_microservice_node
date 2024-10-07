@@ -6,14 +6,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.post("/events", async (req, res) => {
+app.post("/events", (req, res) => {
   try {
     const events = req.body;
-
     axios.post("http://localhost:5000/events", events);
     axios.post("http://localhost:5001/events", events);
-    axios.post("http://localhost:5002/events", events);
-
     res.send({ status: "OK" });
   } catch (error) {
     console.error(error.message);
