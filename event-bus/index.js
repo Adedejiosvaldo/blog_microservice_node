@@ -9,13 +9,21 @@ app.use(bodyParser.json());
 app.post("/events", (req, res) => {
   try {
     const events = req.body;
+    // Post
     axios.post("http://localhost:5000/events", events).then((response) => {
       console.log(response.data);
     });
+
+    // Comment
     axios.post("http://localhost:5001/events", events).then((response) => {
       console.log(response.data);
     });
+    // Query Service
     axios.post("http://localhost:5003/events", events).then((response) => {
+      console.log(response.data);
+    });
+    // Moderation
+    axios.post("http://localhost:5004/events", events).then((response) => {
       console.log(response.data);
     });
     res.send({ status: "OK" });
