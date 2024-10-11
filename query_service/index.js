@@ -12,9 +12,7 @@ app.get("/posts", (req, res) => {
   res.send(posts);
 });
 
-app.post("/events", (req, res) => {
-  const { type, data } = req.body;
-
+const handleEvents = (type, data) => {
   if (type === "PostCreated") {
     const { id, title } = data;
     posts[id] = { id, title, comments: [] };
@@ -37,12 +35,21 @@ app.post("/events", (req, res) => {
     comment.status = status;
     comment.content = content;
   }
+};
 
-  console.log(posts);
+app.post("/events", (req, res) => {
+  const { type, data } = req.body;
 
+  handleEvents(type, data);
   res.send({});
 });
 
-app.listen(5003, () => {
+app.listen(5003, async () => {
   console.log("Server is running on port 5003");
+  const res = await axios.get("http://localhost:5002/events");
+
+  for (const events of res.data) {
+    console.log("Handling event:", events.type);
+    handleEvents(events.type, events.data);
+  }
 });

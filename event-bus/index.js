@@ -6,6 +6,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const events = [];
+
 app.post("/events", (req, res) => {
   try {
     const events = req.body;
@@ -14,6 +16,7 @@ app.post("/events", (req, res) => {
       console.log(response.data);
     });
 
+    events.push(events);
     // Comment
     axios.post("http://localhost:5001/events", events).then((response) => {
       console.log(response.data);
@@ -31,6 +34,10 @@ app.post("/events", (req, res) => {
     console.error(error.message);
     res.status(500).send({ status: "Error" });
   }
+});
+
+aoo.get("/events", (req, res) => {
+  res.send(events);
 });
 
 app.listen(5002, () => {
