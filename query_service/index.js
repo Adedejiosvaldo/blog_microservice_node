@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const axios = require("axios");
 const app = express();
 
 const posts = {};
@@ -38,18 +39,23 @@ const handleEvents = (type, data) => {
 };
 
 app.post("/events", (req, res) => {
-  const { type, data } = req.body;
+  try {
+    const { type, data } = req.body;
 
-  handleEvents(type, data);
-  res.send({});
+    handleEvents(type, data);
+    res.send({});
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ status: "Error" });
+  }
 });
 
 app.listen(5003, async () => {
   console.log("Server is running on port 5003");
   const res = await axios.get("http://localhost:5002/events");
 
-  for (const events of res.data) {
-    console.log("Handling event:", events.type);
-    handleEvents(events.type, events.data);
+  for (let event of res.data) {
+    console.log("Handling event:", event.type);
+    handleEvents(event.type, event.data);
   }
 });

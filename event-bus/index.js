@@ -10,24 +10,25 @@ const events = [];
 
 app.post("/events", (req, res) => {
   try {
-    const events = req.body;
+    const event = req.body;
+    console.log("Event Received:", event.type);
     // Post
-    axios.post("http://localhost:5000/events", events).then((response) => {
-      console.log(response.data);
+    axios.post("http://localhost:5000/events", event).catch((err) => {
+      console.log(err.message);
     });
 
-    events.push(events);
+    events.push(event);
     // Comment
-    axios.post("http://localhost:5001/events", events).then((response) => {
-      console.log(response.data);
+    axios.post("http://localhost:5001/events", event).catch((err) => {
+      console.log(err.message);
     });
     // Query Service
-    axios.post("http://localhost:5003/events", events).then((response) => {
-      console.log(response.data);
+    axios.post("http://localhost:5003/events", event).catch((err) => {
+      console.log(err.message);
     });
     // Moderation
-    axios.post("http://localhost:5004/events", events).then((response) => {
-      console.log(response.data);
+    axios.post("http://localhost:5004/events", event).catch((err) => {
+      console.log(err.message);
     });
     res.send({ status: "OK" });
   } catch (error) {
@@ -36,7 +37,7 @@ app.post("/events", (req, res) => {
   }
 });
 
-aoo.get("/events", (req, res) => {
+app.get("/events", (req, res) => {
   res.send(events);
 });
 
