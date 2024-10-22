@@ -9,6 +9,6 @@ spec:
   ports:
     - name: posts
       protocol: TCP
-      port: 4000
-      targetPort: 4000
-      # nodePort: 31515
+      port: 5000
+      targetPort: 5000
+      nodePort: 31515
