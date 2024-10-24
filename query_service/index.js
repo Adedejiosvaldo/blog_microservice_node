@@ -52,7 +52,7 @@ app.post("/events", (req, res) => {
 
 app.listen(5003, async () => {
   console.log("Server is running on port 5003");
-  const res = await axios.get("http://localhost:5002/events");
+  const res = await axios.get("http://event-bus-srv:5002/events");
 
   for (let event of res.data) {
     console.log("Handling event:", event.type);
