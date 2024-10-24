@@ -13,23 +13,23 @@ app.post("/events", (req, res) => {
     const event = req.body;
     console.log("Event Received:", event.type);
     // Post
-    axios.post("http://localhost:5000/events", event).catch((err) => {
+    axios.post("http://posts-clusterip-srv:5000/events", event).catch((err) => {
       console.log(err.message);
     });
 
-    events.push(event);
-    // Comment
-    axios.post("http://localhost:5001/events", event).catch((err) => {
-      console.log(err.message);
-    });
-    // Query Service
-    axios.post("http://localhost:5003/events", event).catch((err) => {
-      console.log(err.message);
-    });
-    // Moderation
-    axios.post("http://localhost:5004/events", event).catch((err) => {
-      console.log(err.message);
-    });
+    // events.push(event);
+    // // Commentc
+    // axios.post("http://localhost:5001/events", event).catch((err) => {
+    //   console.log(err.message);
+    // });
+    // // Query Service
+    // axios.post("http://localhost:5003/events", event).catch((err) => {
+    //   console.log(err.message);
+    // });
+    // // Moderation
+    // axios.post("http://localhost:5004/events", event).catch((err) => {
+    //   console.log(err.message);
+    // });
     res.send({ status: "OK" });
   } catch (error) {
     console.error(error.message);
