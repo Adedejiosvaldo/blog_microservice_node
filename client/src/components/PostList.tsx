@@ -30,7 +30,7 @@ const PostList = () => {
   });
 
   const fetchPost = async () => {
-    const res = await axios.get("http://localhost:5003/posts");
+    const res = await axios.get("http://posts.com/posts");
     console.log(res.data);
     setPosts(res.data);
   };
