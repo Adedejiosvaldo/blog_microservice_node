@@ -23,13 +23,13 @@ metadata:
 spec:
   selector:
     app: client
-  type: ClusterIP
   ports:
     - name: client
       protocol: TCP
-      port: 5173
-      targetPort: 5173
+      port: 3000
+      targetPort: 3000
 ---
+# NodePort service
 apiVersion: v1
 kind: Service
 metadata:
@@ -39,7 +39,7 @@ spec:
     app: client
   type: NodePort
   ports:
-    - name: comments
+    - name: client
       protocol: TCP
-      port: 5173
-      targetPort: 5173
+      port: 3000
+      targetPort: 3000
