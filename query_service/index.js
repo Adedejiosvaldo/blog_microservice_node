@@ -50,12 +50,30 @@ app.post("/events", (req, res) => {
   }
 });
 
+// app.listen(5003, async () => {
+//   console.log("Server is running on port 5003");
+//   const res = await axios.get("http://event-bus-srv:5002/events");
+
+//   for (let event of res.data) {
+//     console.log("Handling event:", event.type);
+//     handleEvents(event.type, event.data);
+//   }
+// });
+const fetchEvents = async () => {
+  try {
+    const res = await axios.get("http://event-bus-srv:5002/events");
+
+    for (let event of res.data) {
+      console.log("Handling event:", event.type);
+      handleEvents(event.type, event.data);
+    }
+  } catch (error) {
+    console.error("Error fetching events:", error.message);
+    setTimeout(fetchEvents, 5000); // Retry after 5 seconds
+  }
+};
+
 app.listen(5003, async () => {
   console.log("Server is running on port 5003");
-  const res = await axios.get("http://event-bus-srv:5002/events");
-
-  for (let event of res.data) {
-    console.log("Handling event:", event.type);
-    handleEvents(event.type, event.data);
-  }
+  await fetchEvents();
 });
